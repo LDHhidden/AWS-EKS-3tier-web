@@ -3,7 +3,7 @@
 
 # 주의 사항: 
 - .pem 키의 경우 콘솔에서 따로 생성
-- subnet, sg, rtb, igw 생성 시 vpc 아이디 필수
+- subnet, sg, rtb, igw 생성 시 vpc id 필수
 - S3-State를 통해 리소스 상태 관리
 - EKS의 접근이 private로 구현하면 AWS LoadBalancer Controller를 생성하는 eks-addon 코드를 따로 git에 저장 생성 후 bastion에서 코드를 받아 생성
 
@@ -21,3 +21,6 @@
 
 # TODO:
 - CloudWatch
+
+# 아키텍쳐
+<img src="img/AWS_EKS_Web_3tier.png">

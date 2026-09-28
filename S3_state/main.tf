@@ -1,15 +1,17 @@
+# S3 버킷 생성
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = var.bucket_name
+  bucket_prefix = var.bucket_prefix
+  #bucket = var.bucket_name
   force_destroy = true
 
   tags = {
-    Name        = var.bucket_name
+    Name        = var.bucket_prefix
     Environment = var.environment
     ManagedBy   = "Terraform"
     Purpose     = "TerraformState"
   }
 }
-
+# S3 버전 설정
 resource "aws_s3_bucket_versioning" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -17,7 +19,7 @@ resource "aws_s3_bucket_versioning" "terraform_state" {
     status = "Enabled"
   }
 }
-
+# S3 암호화 구성
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 

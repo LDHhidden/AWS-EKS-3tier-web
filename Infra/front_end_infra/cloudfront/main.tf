@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "frontend" {
     origin_access_control_id = aws_cloudfront_origin_access_control.frontend_oac.id
   }
   origin {
-    domain_name = "k8s-testweb-testwebi-1f87ade1c2-1477666035.ap-northeast-2.elb.amazonaws.com"
+    domain_name = "k8s-testweb-testwebi-1f87ade1c2-236040077.ap-northeast-2.elb.amazonaws.com"
     origin_id   = "alb-app-origin"
 
     custom_origin_config {

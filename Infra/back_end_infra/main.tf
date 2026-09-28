@@ -1,9 +1,10 @@
-# Network
+########################### Network ##########################
 module "network" {
   source           = "./modules/Network"
   eks_cluster_name = var.eks_cluster_name
 }
 
+########################### IAM  ###########################
 module "iam" {
   source                   = "./modules/IAM"
   eks_cluster_name         = module.compute.eks_cluster_name
@@ -12,16 +13,18 @@ module "iam" {
   eks_cluster_provider_url = module.compute.eks_cluster_provider_url
 }
 
+########################### Security  ###########################
 module "security" {
   source = "./modules/Security/sg"
   vpc_id = module.network.vpc_id
 }
 
+########################### Compute ###########################
 module "compute" {
   source               = "./modules/Compute"
   vpc_id               = module.network.vpc_id
   region               = var.region
-  eks_cluster_name     = var.eks_cluster_name
+  eks_cluster_name     = var.eks_cluster_name # 이거 뭐 때매 변수(var.) 로 선언했더라?
   public_subnet_ids    = module.network.public_subnet_ids["public-C"]
   private_subnet_ids   = [module.network.private_subnet_ids["app-a"], module.network.private_subnet_ids["app-c"]]
   bastion_sg_id        = [module.security.bastion_sg_id]
@@ -33,9 +36,12 @@ module "compute" {
   node_role_arn        = module.iam.node_role_arn
 }
 
+########################### Storage ###########################
 module "storage" {
   source             = "./modules/Storage"
   vpc_id             = module.network.vpc_id
   private_subnet_ids = [module.network.private_subnet_ids["db-a"], module.network.private_subnet_ids["db-c"]]
   db_sg_id           = [module.security.db_sg_id]
 }
+
+########################### Manage ###########################

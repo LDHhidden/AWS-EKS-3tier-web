@@ -6,6 +6,7 @@ resource "aws_ecr_repository" "app" {
     scan_on_push = true
   }
 
+  # 암호화 구성
   encryption_configuration {
     encryption_type = "AES256"
   }
@@ -17,6 +18,7 @@ resource "aws_ecr_repository" "app" {
   }
 }
 
+# 생명주기
 resource "aws_ecr_lifecycle_policy" "app_lifecycle" {
   repository = aws_ecr_repository.app.name
 
